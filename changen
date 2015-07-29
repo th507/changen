@@ -11,6 +11,11 @@
 
 set -e
 
+dir=$1
+[ -n $dir ] && dir='.'
+
+cd $dir
+
 OLDIFS=$IFS
 IFS=$'\n'
 
@@ -31,7 +36,7 @@ do
 
   from=$t
   # print out target tag version
-  echo -n '# '$from .. $to
+  echo -n '## '$to
   # and its date
   git log -n1 --date=short --pretty=" (%cd)" $to
 
