@@ -63,6 +63,7 @@ Run against [Semantic Versioning Specification](https://github.com/mojombo/semve
 - by one -> SHOULD, not MUST
 - removed increments by 1
 - removed increments by 1
+
 ## v1.0.0-rc.1 (2011-11-25)
 - Delimit pre-release versions by dash instead of dot.
 - FAQ on bufixes returning functionality to documented public API.
@@ -77,7 +78,9 @@ Run against [Semantic Versioning Specification](https://github.com/mojombo/semve
 - Correct build precedence example.
 - Fully specify pre-release and build versions with arbitrary dot elements.
 - Use new-style pre-release version rc.1 in header.
+
 ## v1.0.0-beta (2011-06-08)
+
 ## v1.0.0 (2011-09-06)
 - Fix link to GitHub project.
 - Delimit pre-release versions by dash instead of dot.

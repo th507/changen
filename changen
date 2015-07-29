@@ -52,6 +52,9 @@ do
     git log --no-merges -n1 --date=short --pretty="- %s" $c \
       | grep -Ev 'works|wip|working|^\[from \now\]' 
   done
+
+  # empty line between tags
+  echo ""
 done
 
 IFS=$OLDIFS
