@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Author: Jingwei Liu <liujingwei@gmail.com>
+
+# Generate changelog from git tag/commit
+# This could be useful if you use a linear semantic versioning/tagging scheme.
+
+# USAGE
+# $ changen PATH_TO_YOUR_GIT_REPO
+
+
+set -e
+
+OLDIFS=$IFS
+IFS=$'\n'
+
+# append initial commit to the end
+tag_list=`git tag --sort="-v:refname"; git rev-list --max-parents=0 master`
+
+
+from=''
+to=''
+
+# loop through tag list
+for t in $tag_list
+do
+  if [ -z "$to" ] ; then
+    to=$t
+    continue
+  fi
+
+  from=$t
+  # print out target tag version
+  echo -n '# '$from .. $to
+  # and its date
+  git log -n1 --date=short --pretty=" (%cd)" $to
+
+  # list of commits between adjacent semantic version/tags
+  commits=`git rev-list --reverse $from..$to~`
+
+  # update indices
+  to=$t
+
+  # print out each commit message
+  for c in $commits
+  do
+    git log --no-merges -n1 --date=short --pretty="- %s" $c \
+      | grep -Ev 'works|wip|working|^\[from \now\]' 
+  done
+done
+
+IFS=$OLDIFS
