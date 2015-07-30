@@ -49,6 +49,7 @@ do
   # print out each commit message
   for c in $commits
   do
+    # ignore intermediate commits
     git log --no-merges -n1 --date=short --pretty="- %s" $c \
       | grep -Ev 'works|wip|working|^\[from \now\]' 
   done

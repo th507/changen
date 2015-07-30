@@ -1,4 +1,4 @@
-# changen
+# ChanGen
 Generate changelog from git tag/commit.
 
 This could be useful if you use a linear semantic versioning/tagging scheme.
