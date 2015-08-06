@@ -11,7 +11,7 @@ $ changen PATH_TO_YOUR_GIT_REPO
 ```
 
 # Demo output
-Run against [Semantic Versioning Specification](https://github.com/mojombo/semver) yields:
+Running against [Semantic Versioning Specification](https://github.com/mojombo/semver) yields:
 
 ## v2.0.0 (2013-06-18)
 - This is really the 2.0.0-rc.1 spec. 1.0.0 was previously released.
