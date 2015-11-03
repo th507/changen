@@ -19,8 +19,14 @@ cd $dir
 OLDIFS=$IFS
 IFS=$'\n'
 
+# get current branch
+head=`git rev-parse --abbrev-ref HEAD`
+
+# get current commit
+HEAD=`git rev-parse HEAD`
+
 # append initial commit to the end
-tag_list=`git tag --sort="-v:refname"; git rev-list --max-parents=0 master`
+tag_list=`git tag --sort="-v:refname"; git rev-list --max-parents=0 ${head}`
 
 
 from=''
@@ -30,7 +36,14 @@ to=''
 for t in $tag_list
 do
   if [ -z "$to" ] ; then
-    to=$t
+    # get commit hash of the first tag
+    tag_commit_hash=`git show-ref --dereference $t | tail -n1 | awk '{print $1}'`
+    # compare it with HEAD
+    if [ "$tag_commit_hash" == "$HEAD" ] ; then
+      to=$t
+    else
+      to="HEAD"
+    fi
     continue
   fi
 
