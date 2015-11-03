@@ -63,13 +63,13 @@ do
   for c in $commits
   do
     # ignore intermediate commits
-    # commits like: 
+    # commits like:
     #   - it works
     #   - wip
     #   - fixup
     #   - typo
     git log --no-merges -n1 --date=short --pretty="- %s" $c \
-      | grep -Ev 'works|wip|working|fixup|typo|^\[from \now\]' 
+      | grep -Ev 'works|wip|working|fixup|typo|^\[from \now\]'
   done
 
   # empty line between tags
