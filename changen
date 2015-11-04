@@ -41,15 +41,17 @@ do
     # compare it with HEAD
     if [ "$tag_commit_hash" == "$HEAD" ] ; then
       to=$t
+      display_name=$to
     else
       to="HEAD"
+      display_name="Latest/$HEAD"
     fi
     continue
   fi
 
   from=$t
   # print out target tag version
-  echo -n '## '$to
+  echo -n '## '$display_name
   # and its date
   git log -n1 --date=short --pretty=" (%cd)" $to
 
@@ -69,7 +71,7 @@ do
     #   - fixup
     #   - typo
     git log --no-merges -n1 --date=short --pretty="- %s" $c \
-      | grep -Ev 'works|wip|working|fixup|typo|^\[from \now\]'
+      | grep -Ev 'works|wip|working|^\[from \now\]'
   done
 
   # empty line between tags
