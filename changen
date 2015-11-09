@@ -28,7 +28,6 @@ HEAD=`git rev-parse HEAD`
 # append initial commit to the end
 tag_list=`git tag --sort="-v:refname"; git rev-list --max-parents=0 ${head}`
 
-
 from=''
 to=''
 
@@ -39,14 +38,14 @@ do
     # get commit hash of the first tag
     tag_commit_hash=`git show-ref --dereference $t | tail -n1 | awk '{print $1}'`
     # compare it with HEAD
-    if [ "$tag_commit_hash" == "$HEAD" ] ; then
+    if [ "$tag_commit_hash" != "$HEAD" ] ; then
+      to="HEAD"
+      display_name="Latest/"`git rev-parse --short $HEAD`
+    else
       to=$t
       display_name=$to
-    else
-      to="HEAD"
-      display_name="Latest/$HEAD"
+      continue
     fi
-    continue
   fi
 
   from=$t
@@ -55,11 +54,18 @@ do
   # and its date
   git log -n1 --date=short --pretty=" (%cd)" $to
 
+  # should we ignore the tag commit (ususally contains only the version)
+  if [ "$to" == "HEAD" ] ; then
+    to_prev=$to
+  else
+    to_prev="$to~"
+  fi
   # list of commits between adjacent semantic version/tags
-  commits=`git rev-list --reverse $from..$to~`
+  commits=`git rev-list --reverse $from..$to_prev`
 
   # update indices
   to=$t
+  display_name=$to
 
   # print out each commit message
   for c in $commits
